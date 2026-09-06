@@ -13,14 +13,14 @@ class LiveHeatSource {
 
     suspend fun fetch(url: String, athlete: String): HeatUpdate = withContext(Dispatchers.IO) {
         if (isWaveLegacy(url)) {
-            val feedUrl = if (cachedPageUrl == url) cachedFeedUrl else null
+            val feedUrl = (if (cachedPageUrl == url) cachedFeedUrl else null)
                 ?: resolveWaveLegacyFeed(url).also {
                     cachedPageUrl = url
                     cachedFeedUrl = it
                 }
             HeatParser.parseWaveLegacy(download(feedUrl, "application/json"), athlete)
         } else if (isSurfScores(url)) {
-            val feedUrl = if (cachedPageUrl == url) cachedFeedUrl else null
+            val feedUrl = (if (cachedPageUrl == url) cachedFeedUrl else null)
                 ?: resolveSurfScoresFeed(url).also {
                     cachedPageUrl = url
                     cachedFeedUrl = it
