@@ -94,4 +94,3 @@ Para testar o modo automático, aponte o campo URL para um servidor que devolva 
 ## Licença
 
 MIT
-

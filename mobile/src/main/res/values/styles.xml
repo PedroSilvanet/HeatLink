@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.HeatLink" parent="android:style/Theme.Material.Light.NoActionBar">
+        <item name="android:fontFamily">sans</item>
+        <item name="android:colorAccent">#00796B</item>
+        <item name="android:navigationBarColor">#061C24</item>
+        <item name="android:statusBarColor">#061C24</item>
+    </style>
+</resources>
