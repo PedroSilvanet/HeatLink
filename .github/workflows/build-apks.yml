@@ -28,8 +28,8 @@ jobs:
       - name: Allow Gradle wrapper execution
         run: chmod +x gradlew
 
-      - name: Test and build phone and watch APKs
-        run: ./gradlew test :mobile:assembleDebug :wear:assembleDebug
+      - name: Test shared code and build phone and watch APKs
+        run: ./gradlew --no-daemon :shared:test :mobile:assembleDebug :wear:assembleDebug
 
       - name: Collect APKs
         run: |
