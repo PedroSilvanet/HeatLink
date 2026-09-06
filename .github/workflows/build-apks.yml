@@ -1,0 +1,46 @@
+name: Build Android APKs
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    tags: ['v*']
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+          cache: gradle
+
+      - name: Allow Gradle wrapper execution
+        run: chmod +x gradlew
+
+      - name: Test and build phone and watch APKs
+        run: ./gradlew test :mobile:assembleDebug :wear:assembleDebug
+
+      - name: Collect APKs
+        run: |
+          mkdir -p release
+          cp mobile/build/outputs/apk/debug/mobile-debug.apk release/HeatLink-phone.apk
+          cp wear/build/outputs/apk/debug/wear-debug.apk release/HeatLink-watch.apk
+
+      - name: Upload installable APKs
+        uses: actions/upload-artifact@v4
+        with:
+          name: HeatLink-APKs
+          path: release/*.apk
+          if-no-files-found: error
+          retention-days: 30
