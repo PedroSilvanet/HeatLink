@@ -78,7 +78,7 @@ object HeatParser {
             .mapNotNull { waves?.optJSONObject(it) }
             .filter { it.optBoolean("scores_complete", it.has("score") && !it.isNull("score")) }
             .maxWithOrNull(compareBy<JSONObject> { it.optInt("numero", 0) }.thenBy { it.optInt("onda_id", 0) })
-            ?.optionalDouble("score")
+            ?.firstDouble("score")
 
         val needed = if (athlete.optString("status_tipo").equals("needs", ignoreCase = true)) {
             Regex("([0-9]+(?:[.,][0-9]+)?)")
